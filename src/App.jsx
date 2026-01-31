@@ -1,57 +1,51 @@
 import { useState } from 'react';
-import './App.css'
-
+import './App.css';
 
 function App() {
+  const [topics, setTopics] = useState([
+    "Instalacion de Node",
+    "Uso de NPM"
+  ]);
 
-const [topics, setTopics] = useState ([
-  "Instalacion de Node",
-  "Uso de NPW"
+  const [newTopic, setNewTopic] = useState("");
 
-])
+  const addTopic = () => {
+    if (newTopic.trim() === "") return;
+    setTopics([...topics, newTopic]);
+    setNewTopic("");
+  };
 
-const [newTopic, setNewTopic] = useState ("");
-
-const addTopic = () => {
-
-     if (newTopic.trim() === "") return;
-      setTopics ([...topics, newTopic]);
-      setNewTopic ("");
-};
-
-
-
-
-
+  const removeTopic = (index) => {
+    setTopics(topics.filter((_, i) => i !== index));
+  };
 
   return (
-    <div className ="main-container">
-      <h1>Fronted week3 activity</h1>
+    <div className="main-container">
+      <h1>Frontend week3 activity</h1>
       <div className="contenedor-listas">
-
-        {/* seccion dinamica */}
         <div>
-
-
-          <input type="text"
-          placeholder="Escribe un nuevo tema"
-          value={newTopic}
-          onChange={(e) => setNewTopic (e.target.value)}
+          <input
+            type="text"
+            placeholder="Escribe un nuevo tema"
+            value={newTopic}
+            onChange={(e) => setNewTopic(e.target.value)}
           />
           <button onClick={addTopic}>Agregar a la lista</button>
-          
-          </div>
+        </div>
+
         <h3>Listado de temas:</h3>
         <ol>
           {topics.map((topicName, index) => (
             <li key={index}>
               {topicName}
-              
-              </li>
-
-
-          )) }
-
+              <button
+                style={{ marginLeft: "10px", color: "red" }}
+                onClick={() => removeTopic(index)}
+              >
+                Eliminar
+              </button>
+            </li>
+          ))}
         </ol>
 
         <hr />
@@ -60,10 +54,9 @@ const addTopic = () => {
           <li>VS Code</li>
           <li>Intellij</li>
         </ul>
-
-        </div>
+      </div>
     </div>
   );
 }
 
-export default App
+export default App;
